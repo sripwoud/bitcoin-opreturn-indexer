@@ -13,7 +13,7 @@
 
 ### Example
 Transaction [8bae12b5f4c088d940733dcd1455efc6a3a69cf9340e17a981286d3778615684](https://www.smartbit.com.au/tx/8bae12b5f4c088d940733dcd1455efc6a3a69cf9340e17a981286d3778615684) has `OP_RETURN` 636861726c6579206c6f766573206865696469 that decoded leads to "charley loves heidi".
-![tx_screenshot](./capture_smartbit.png)
+![tx_screenshot](./screenshots/capture_smartbit.png)
 
 ## Getting started
 Requirements:
@@ -35,8 +35,11 @@ Requirements:
       # check DB was created:
       \l
       ```
-2. Start json-api: `cd json-api && yarn start`
-3. Run tests in respective packages/folders: `yarn test`
+2. Index blocks: `cd indexer && yarn start`
+2. Start json-api: `cd json-api && yarn start`. Access api @ [http://localhost:3000/](http://localhost:3000/)
+
+### Tests
+Run tests in respective packages/folders: `yarn test`
 
 ## DB Schema
 |Column|Type|
@@ -54,7 +57,16 @@ Requirements:
 |GET|/opreturn/:blockHash|opReturn record||
 |GET|/opreturn/:opreturnHex|opReturn record|TO DO|
 
-## Still To Do
+## Example: indexing 10 blocks results
+![console screenshot](./screenshots/scanning-result-console.png)
+![dbeaver screenshot](./screenshots/scanning-result-dbeaver.png)
+![browser screenshot](./screenshots/scanning-result-browser.png)
+
+## To Fix
+The [utils](./indexer/src/lib/utils) functions do seem to return correct op_return buffers.
+However the op_return records inserted in the DB have empty buffers!
+It is likely an issue related to wrong datatype/interface definitions in my [OpReturn Model definition file](./db/src/models/opreturn.ts) ((BLOB?)).
+
 
 ## Resource
 - How to read read raw OP_RETURN data from blocks: refactored version of functions found in [blockai-unofficial/raw-op-return](https://github.com/blockai-unofficial/raw-op-return)
