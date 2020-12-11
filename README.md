@@ -1,8 +1,11 @@
 # Test Asset Integration Engineer - Exodus
 ## Requirements & Rules
-- [ ] time limit: 8 hours
 - [ ] store Bitcoin OP_RETURN data
 - [ ] index Bitcoin OP_RETURN data
+
+(Blocks are indexed and stored but with empty buffers due to an issue not yet fixed. See [to fix](#to-fix))
+
+- [x] time limit: 8 hours
 - [x] serve on an HTTP endpoint as a JSON payload: `/opreturn/${opReturnData}`
 - [x] payload should include transaction hash and block hash
 - [x] NodeJS
