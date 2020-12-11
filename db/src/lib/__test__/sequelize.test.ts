@@ -1,4 +1,4 @@
-import { sequelize } from '../sequelize'
+import { sequelize } from '../../lib'
 
 it('connects to opreturn postgres DB', async () => {
   let success

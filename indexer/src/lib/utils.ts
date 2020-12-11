@@ -1,3 +1,4 @@
+// TO DO EXTRACT IN COMMON NPM PACKAGE
 import { btc } from '../lib'
 
 const getTxsFromBlock = async (blockheight: number) => {

@@ -1,7 +1,8 @@
-import { Model, Sequelize, BLOB, Optional, DataTypes } from 'sequelize'
+import { Model, Optional, DataTypes } from 'sequelize'
 
 import { sequelize } from '../lib'
 
+// TO DO EXPORT IN COMMON NPM PACKAGE
 export interface OpReturnAttrs {
   id: number
   data: Blob

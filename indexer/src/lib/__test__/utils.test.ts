@@ -12,8 +12,9 @@ it('can get raw txs from a given block', async () => {
 it('extracts op return data from txs', async () => {
   const { txs } = await getTxsFromBlock(1000000)
   const opreturns = extractOpReturnData(txs)
-  expect(opreturns).toBeDefined()
-  expect(opreturns).not.toEqual([])
+  const opReturnBufferData = opreturns[0].data
+  expect(opReturnBufferData).toBeDefined()
+  expect(opReturnBufferData).not.toEqual([])
 })
 
 it('returns op_return data from a block', async () => {

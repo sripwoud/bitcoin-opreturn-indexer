@@ -1,5 +1,6 @@
-import { OpReturn } from '../opreturn'
-import { getOpReturnDataFromBlock, sequelize } from '../../lib'
+import { OpReturn } from '../../models'
+import { sequelize } from '../../lib'
+import { getOpReturnDataFromBlock } from '../../../../indexer/src/lib'
 
 it('can add an opreturn record in DB', async () => {
   // fetch opreturn data
@@ -13,5 +14,7 @@ it('can add an opreturn record in DB', async () => {
 
   const opReturn = await OpReturn.findOne({ where: { blockHash } })
 
-  console.log(opReturn)
+  expect(opReturn?.getDataValue('blockHash')).toEqual(
+    '0000000000478e259a3eda2fafbeeb0106626f946347955e99278fe6cc848414'
+  )
 })
