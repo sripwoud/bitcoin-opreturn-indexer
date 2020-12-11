@@ -1,16 +1,30 @@
 import { Router } from 'express'
 
-import { client } from '../lib'
-import { extractOpMeta } from '../lib'
+import { OpReturn } from '../../../db/src/models'
+import { NotFoundError } from '../errors'
+
 const router = Router()
 
-router.get('/opreturn/:blockheight', async (req, res) => {
-  const { blockheight } = req.params
-  const blockHash = (await client.getBlockHash(+blockheight))[0]
-  const block = (await client.getBlock(blockHash))[0]
-  let tx = block.tx[0]
-  tx = await client.getRawTransaction(tx)
-  res.send(tx)
+router.get('/opreturn/blockheight/:blockHeight', async (req, res) => {
+  let { blockHeight } = req.params
+  const opreturn = await OpReturn.findOne({
+    where: { blockHeight: +blockHeight }
+  })
+
+  if (!opreturn) throw new NotFoundError()
+
+  res.status(200).send(opreturn)
+})
+
+router.get('/opreturn/blockhash/:blockHash', async (req, res) => {
+  let { blockHash } = req.params
+  const opreturn = await OpReturn.findOne({
+    where: { blockHash }
+  })
+
+  if (!opreturn) throw new NotFoundError()
+
+  res.status(200).send(opreturn)
 })
 
 export { router as opReturnRouter }
