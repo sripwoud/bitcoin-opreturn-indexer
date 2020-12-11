@@ -9,27 +9,25 @@ const getTxsFromBlock = async (blockheight: number) => {
     )
   )
 
-  return rawTxs
+  return { blockHash, txs: rawTxs }
 }
 
 const extractOpReturnData = txs =>
-  txs
-    .map(({ vout }) => {
-      let opreturns = vout.map(output => {
-        if (output.scriptPubKey?.asm.indexOf('OP_RETURN ') === 0) {
-          const data = output.scriptPubKey.asm.split('OP_RETURN ')[1]
-          const bufferData = Buffer.from(data, 'hex')
-          return bufferData
-        }
-      })
-
-      return opreturns.filter(Boolean)
+  txs.map(({ vout, hash }) => {
+    let opreturns = vout.map(output => {
+      if (output.scriptPubKey?.asm.indexOf('OP_RETURN ') === 0) {
+        const data = output.scriptPubKey.asm.split('OP_RETURN ')[1]
+        const bufferData = Buffer.from(data, 'hex')
+        return bufferData
+      }
     })
-    .flat()
+
+    return { txHash: hash, data: opreturns.filter(Boolean) }
+  })
 
 const getOpReturnDataFromBlock = async (blockheight: number) => {
-  const txs = await getTxsFromBlock(blockheight)
-  return extractOpReturnData(txs)
+  const { blockHash, txs } = await getTxsFromBlock(blockheight)
+  return { blockHash, opreturns: extractOpReturnData(txs) }
 }
 
 export { getTxsFromBlock, extractOpReturnData, getOpReturnDataFromBlock }

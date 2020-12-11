@@ -2,30 +2,31 @@ import { Model, Sequelize, BLOB, Optional, DataTypes } from 'sequelize'
 
 import { sequelize } from '../lib'
 
-export interface OpreturnAttrs {
+export interface OpReturnAttrs {
   id: number
-  data: string
-  blockhash: string
-  blockheight: number
-  txhash: string
+  data: Blob
+  blockHash: string
+  blockHeight: number
+  txHash: string
 }
 
-interface OpreturnCreationAttributes extends Optional<OpreturnAttrs, 'id'> {}
+interface OpReturnCreationAttributes extends Optional<OpReturnAttrs, 'id'> {}
 
-class Opreturn extends Model<OpreturnAttrs, OpreturnCreationAttributes> {}
+class OpReturn extends Model<OpReturnAttrs, OpReturnCreationAttributes> {}
 
-Opreturn.init(
+// @ts-ignore
+OpReturn.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
     },
 
     data: { type: DataTypes.BLOB, allowNull: false },
-    blockhash: { type: DataTypes.TEXT, allowNull: false },
-    blockheight: { type: DataTypes.INTEGER, allowNull: false },
-    txhash: { type: DataTypes.TEXT, allowNull: false }
+    blockHash: { type: DataTypes.TEXT, allowNull: false },
+    blockHeight: { type: DataTypes.INTEGER, allowNull: false },
+    txHash: { type: DataTypes.TEXT, allowNull: false }
   },
   {
     sequelize,
@@ -34,4 +35,4 @@ Opreturn.init(
   }
 )
 
-export { Opreturn }
+export { OpReturn }

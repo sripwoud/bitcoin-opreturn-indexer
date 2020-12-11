@@ -5,11 +5,11 @@
 - [ ] index Bitcoin OP_RETURN data
 - [ ] serve on an HTTP endpoint as a JSON payload: `/opreturn/${opReturnData}`
 - [ ] payload should include transaction hash and block hash
-- [ ] NodeJS
-- [ ] any 3rd-party npm library
-- [ ] Postgres as database
-- [ ] Bitcoin ~~mainnet~~ or testnet
-- [ ] use bitcoind
+- [x] NodeJS
+- [x] any 3rd-party npm library
+- [x] Postgres as database
+- [x] Bitcoin ~~mainnet~~ or testnet
+- [x] use bitcoind
 
 ## Example
 Transaction [8bae12b5f4c088d940733dcd1455efc6a3a69cf9340e17a981286d3778615684](https://www.smartbit.com.au/tx/8bae12b5f4c088d940733dcd1455efc6a3a69cf9340e17a981286d3778615684) has `OP_RETURN` 636861726c6579206c6f766573206865696469 that decoded leads to "charley loves heidi".
@@ -34,9 +34,9 @@ Transaction [8bae12b5f4c088d940733dcd1455efc6a3a69cf9340e17a981286d3778615684](h
 |Column|Type|
 |--|--|
 |op_return|bytes|
-|blockhash|string|
-|blockheight|integer|
-|txhash|string|
+|blockHash|string|
+|blockHeight|integer|
+|txHash|string|
 
 # API
 ## Route
