@@ -27,15 +27,29 @@ const main = async () => {
       const { blockHash, opreturns } = await getOpReturnDataFromBlock(bh)
 
       console.log(`Scanning block ${bh}`)
-      opreturns.forEach(({ txHash, data }) => {
-        console.log(`Indexing tx ${txHash}`)
-        return OpReturn.create({ data, blockHash, txHash, blockHeight: bh })
+      opreturns.forEach(async ({ txHash, data }) => {
+        console.log(`  Indexing tx ${txHash}`)
+        await OpReturn.create({ data, blockHash, txHash, blockHeight: bh })
       })
     }
   }
+
   if (attribute === Choice.Between) {
-    const { value: fromBlockHeight } = await getValueInput('End blockheight')
-    console.log(fromBlockHeight)
+    const { value: fromBlockHeight } = await getValueInput('From blockheight')
+    const { value: endBlockHeight } = await getValueInput('End blockheight')
+
+    // parse string input to integer
+    const from = +fromBlockHeight
+    const to = +endBlockHeight
+    for (let bh = from; bh <= to; bh++) {
+      const { blockHash, opreturns } = await getOpReturnDataFromBlock(bh)
+
+      console.log(`Scanning block ${bh}`)
+      opreturns.forEach(async ({ txHash, data }) => {
+        console.log(`  Indexing tx ${txHash}`)
+        await OpReturn.create({ data, blockHash, txHash, blockHeight: bh })
+      })
+    }
   }
 
   console.log('Done')

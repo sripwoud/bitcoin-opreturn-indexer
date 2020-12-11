@@ -3,7 +3,7 @@
 - [ ] time limit: 8 hours
 - [ ] store Bitcoin OP_RETURN data
 - [ ] index Bitcoin OP_RETURN data
-- [ ] serve on an HTTP endpoint as a JSON payload: `/opreturn/${opReturnData}`
+- [x] serve on an HTTP endpoint as a JSON payload: `/opreturn/${opReturnData}`
 - [x] payload should include transaction hash and block hash
 - [x] NodeJS
 - [x] any 3rd-party npm library
@@ -59,12 +59,14 @@ Run tests in respective packages/folders: `yarn test`
 
 ## Example: indexing 10 blocks results
 ![console screenshot](./screenshots/scanning-result-console.png)
+
 ![dbeaver screenshot](./screenshots/scanning-result-dbeaver.png)
+
 ![browser screenshot](./screenshots/scanning-result-browser.png)
 
 ## To Fix
-The [utils](./indexer/src/lib/utils) functions do seem to return correct op_return buffers.
-However the op_return records inserted in the DB have empty buffers!
+The [utils](./indexer/src/lib/utils) functions do seem to return correct op_return buffers.  
+However the op_return records inserted in the DB have empty buffers!  
 It is likely an issue related to wrong datatype/interface definitions in my [OpReturn Model definition file](./db/src/models/opreturn.ts) ((BLOB?)).
 
 
