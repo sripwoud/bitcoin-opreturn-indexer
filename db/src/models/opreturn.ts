@@ -5,7 +5,7 @@ import { sequelize } from '../lib'
 // TO DO EXPORT IN COMMON NPM PACKAGE
 export interface OpReturnAttrs {
   id: number
-  data: Blob
+  data: string
   blockHash: string
   blockHeight: number
   txHash: string
@@ -24,7 +24,7 @@ OpReturn.init(
       primaryKey: true
     },
 
-    data: { type: DataTypes.BLOB, allowNull: false },
+    data: { type: DataTypes.TEXT, allowNull: false },
     blockHash: { type: DataTypes.TEXT, allowNull: false },
     blockHeight: { type: DataTypes.INTEGER, allowNull: false },
     txHash: { type: DataTypes.TEXT, allowNull: false }

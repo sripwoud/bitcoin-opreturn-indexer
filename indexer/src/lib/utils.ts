@@ -14,16 +14,18 @@ const getTxsFromBlock = async (blockheight: number) => {
 }
 
 const extractOpReturnData = txs =>
-  txs.map(({ vout, hash }) => {
+  txs.map(({ vout, txid }) => {
     let opreturns = vout.map(output => {
       if (output.scriptPubKey?.asm.indexOf('OP_RETURN ') === 0) {
         const data = output.scriptPubKey.asm.split('OP_RETURN ')[1]
-        const bufferData = Buffer.from(data, 'hex')
-        return bufferData
+        return data
       }
     })
 
-    return { txHash: hash, data: opreturns.filter(Boolean) }
+    return {
+      txHash: txid,
+      data: opreturns.filter(Boolean)[0] || ''
+    }
   })
 
 const getOpReturnDataFromBlock = async (blockheight: number) => {
