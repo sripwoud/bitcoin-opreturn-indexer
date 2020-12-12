@@ -1,24 +1,50 @@
 import request from 'supertest'
 
 import { app } from '../../app'
+import { OpReturn } from '../../../../db/src/models'
 
-it('retrieves an op_record by querying by blockheight', async () => {
-  const blockHeight = 1000000
-  const { body: opReturn } = await request(app)
-    .get(`/opreturn/blockheight/${blockHeight}`)
-    .send()
+describe('opreturn route', () => {
+  const opReturnMock = {
+    data: 'abc',
+    blockHash: '000',
+    blockHeight: 123,
+    txHash: '321'
+  }
 
-  expect(opReturn.blockHeight).toEqual(1000000)
-})
+  beforeEach(async () => {
+    OpReturn.destroy({ where: {}, truncate: true })
+    await OpReturn.create(opReturnMock)
+  })
 
-it('retrieves an op_record by querying by blockhash', async () => {
-  const blockHash =
-    '0000000000478e259a3eda2fafbeeb0106626f946347955e99278fe6cc848414'
-  const { body: opReturn } = await request(app)
-    .get(`/opreturn/blockhash/${blockHash}`)
-    .send()
+  it('retrieves an op_return record by querying by blockheight', async () => {
+    await OpReturn.create(opReturnMock)
 
-  expect(opReturn.blockHash).toEqual(
-    '0000000000478e259a3eda2fafbeeb0106626f946347955e99278fe6cc848414'
-  )
+    const { body: opReturn } = await request(app)
+      .get(`/opreturn/blockheight/${opReturnMock.blockHeight}`)
+      .send()
+
+    Object.entries(opReturnMock).map(([k, v]) => {
+      expect(v).toEqual(opReturn[k])
+    })
+  })
+
+  it('retrieves an op_return record by querying by blockhash', async () => {
+    const { body: opReturn } = await request(app)
+      .get(`/opreturn/blockhash/${opReturnMock.blockHash}`)
+      .send()
+
+    Object.entries(opReturnMock).map(([k, v]) => {
+      expect(v).toEqual(opReturn[k])
+    })
+  })
+
+  it('retrieves an op_return record by querying by op_return data', async () => {
+    const { body: opReturn } = await request(app)
+      .get(`/opreturn/data/${opReturnMock.data}`)
+      .send()
+
+    Object.entries(opReturnMock).map(([k, v]) => {
+      expect(v).toEqual(opReturn[k])
+    })
+  })
 })

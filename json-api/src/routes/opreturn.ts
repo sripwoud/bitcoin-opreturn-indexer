@@ -27,4 +27,15 @@ router.get('/opreturn/blockhash/:blockHash', async (req, res) => {
   res.status(200).send(opreturn)
 })
 
+router.get('/opreturn/data/:data', async (req, res) => {
+  let { data } = req.params
+  const opreturn = await OpReturn.findOne({
+    where: { data }
+  })
+
+  if (!opreturn) throw new NotFoundError()
+
+  res.status(200).send(opreturn)
+})
+
 export { router as opReturnRouter }
