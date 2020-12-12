@@ -1,23 +1,25 @@
 import inquirer from 'inquirer'
 
 export enum Choice {
-  StartingFrom = 'Starting from',
-  Between = 'Between'
+  From = '<N> blocks from <blockheight>',
+  Between = 'Between <blockheight> and <blockheight> ',
+  Last = 'Last <N> blocks'
 }
-// returns Promise
-export const getAttributeInput = (): Promise<{ attribute: Choice }> => {
-  return inquirer.prompt([
+
+export const getAttributeInput = async (): Promise<Choice> => {
+  const { attribute } = await inquirer.prompt([
     {
       type: 'list',
       name: 'attribute',
-      message: 'Scan blocks (blockheight):',
-      choices: [Choice.StartingFrom, Choice.Between]
+      message: 'Choose scanning option:',
+      choices: [Choice.From, Choice.Between, Choice.Last]
     }
   ])
+  return attribute
 }
 
-export const getValueInput = (text: string): Promise<{ value: string }> => {
-  return inquirer.prompt([
+export const getValueInput = async (text: string): Promise<number> => {
+  const { value } = await inquirer.prompt([
     {
       type: 'number',
       name: 'value',
@@ -31,4 +33,18 @@ export const getValueInput = (text: string): Promise<{ value: string }> => {
       }
     }
   ])
+  return +value
+}
+
+export const getConfirmInput = async (text: string): Promise<string> => {
+  const { value } = await inquirer.prompt([
+    {
+      type: 'confirm',
+      name: 'value',
+      default: false,
+      message: `${text}:`
+    }
+  ])
+
+  return value
 }

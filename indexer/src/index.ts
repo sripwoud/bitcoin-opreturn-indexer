@@ -1,58 +1,59 @@
 import {
-  getOpReturnDataFromBlock,
   getValueInput,
   getAttributeInput,
-  Choice
+  getConfirmInput,
+  Choice,
+  btc,
+  watchForNextBlocks
 } from './lib'
 import { sequelize } from '../../db/src/lib'
-import { OpReturn } from '../../db/src/models'
+import { scanAndIndexBlocks } from './scan'
 
 const main = async () => {
-  // force sync
-  await sequelize.sync({ force: true })
+  console.clear()
+  // resync DB?
+  const resync = await getConfirmInput('Resync (overwrite) existing DB?')
+  if (resync) await sequelize.sync({ force: true })
 
-  const { attribute } = await getAttributeInput()
-  if (attribute === Choice.StartingFrom) {
-    const { value: startingBlockHeight } = await getValueInput(
-      'Starting blockheight'
-    )
-    const { value: numberBlocks } = await getValueInput(
-      'Number of blocks to scan'
-    )
+  // Scan by
+  const attribute = await getAttributeInput()
 
-    // parse string input to integer
-    const sbh = +startingBlockHeight
-    const nb = +numberBlocks
-    for (let bh = sbh; bh <= sbh + nb; bh++) {
-      const { blockHash, opreturns } = await getOpReturnDataFromBlock(bh)
-
-      console.log(`Scanning block ${bh}`)
-      opreturns.forEach(async ({ txHash, data }) => {
-        console.log(`  Indexing tx ${txHash}`)
-        await OpReturn.create({ data, blockHash, txHash, blockHeight: bh })
-      })
+  switch (attribute) {
+    case Choice.From: {
+      const from = await getValueInput('Start at (blockheight)')
+      const numberBlocks = await getValueInput('Number of blocks to scan')
+      await scanAndIndexBlocks(from, from + numberBlocks)
+      break
     }
+
+    case Choice.Between: {
+      const from = await getValueInput('Start at (blockheight)')
+      const to = await getValueInput('Stop at (blockheight)')
+      await scanAndIndexBlocks(from, to)
+      break
+    }
+
+    case Choice.Last: {
+      const last = await btc('getBlockCount')
+      const numberBlocks = await getValueInput('Number of blocks to scan')
+      await scanAndIndexBlocks(last - numberBlocks, last)
+      break
+    }
+    default:
   }
 
-  if (attribute === Choice.Between) {
-    const { value: fromBlockHeight } = await getValueInput('From blockheight')
-    const { value: endBlockHeight } = await getValueInput('End blockheight')
+  console.log('Done indexing')
 
-    // parse string input to integer
-    const from = +fromBlockHeight
-    const to = +endBlockHeight
-    for (let bh = from; bh <= to; bh++) {
-      const { blockHash, opreturns } = await getOpReturnDataFromBlock(bh)
-
-      console.log(`Scanning block ${bh}`)
-      opreturns.forEach(async ({ txHash, data }) => {
-        console.log(`  Indexing tx ${txHash}`)
-        await OpReturn.create({ data, blockHash, txHash, blockHeight: bh })
-      })
-    }
+  const watch = await getConfirmInput(
+    'Start watch mode (listening for next blocks)'
+  )
+  if (watch) {
+    const interval = await getValueInput(
+      'Ping to check for a new block every (min)'
+    )
+    await watchForNextBlocks(interval)
   }
-
-  console.log('Done')
+  return
 }
 
 main()
