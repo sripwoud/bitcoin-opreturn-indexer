@@ -16,10 +16,7 @@ Transaction [8bae12b5f4c088d940733dcd1455efc6a3a69cf9340e17a981286d3778615684](h
 ![tx_screenshot](./screenshots/capture_smartbit.png)
 
 ## Getting started
-Requirements:
-- yarn
-- postgres
-- nodeJS
+Requirements: yarn, postgres, nodeJS/npm
 1. bitcoin-core client config
   See [bitcoin.conf](./bitcoin.conf).  
   Especially pay attention to the `rpcworkqueue` setting to avoid the following error (in debug.log file). I haven't run into errors by setting it to 500.
@@ -41,11 +38,25 @@ Requirements:
       # check DB was created:
       \l
       ```
+2. Check config settings in [db/config.ts](./db/config.ts) and [indexer/config.ts](./indexer/config.ts).
+  Default:
+    ```
+      postgres:
+        host: 'localhost',
+        dialect,
+        db: 'opreturn',
+        username: 'r1oga',
+        password: 'exodus'
+      bitcoind:
+        host: '127.0.0.1', // default
+        username: 'r1oga',
+        password: 'exodus',
+        port: 8332 // default
+    ```
 2. Index blocks: `cd indexer && yarn start`
-2. Start json-api: `cd json-api && yarn start`. Access api @ [http://localhost:3000/](http://localhost:3000/)
+2. Start json-api: `cd json-api && yarn start`. Access api at [http://localhost:3000/](http://localhost:3000/)
 
-### Tests
-Run tests in respective packages/folders: `yarn test`
+## Tests: `yarn test` (in respective packages/folders:)
 
 ## DB Schema
 |Column|Type|Description|
@@ -56,12 +67,12 @@ Run tests in respective packages/folders: `yarn test`
 |txHash|TEXT|txid|
 
 ## API
-### Route
-|METHOD|ROUTE|RESPONSE|
-|--|--|--|--|
-|GET|/opreturn/blockheight/:blockHeight|opReturn record|
-|GET|/opreturn/blockhash/:blockHash|opReturn record|
-|GET|/opreturn/data/:data|opReturn record|
+### Routes
+|METHOD|ROUTE|
+|--|--|
+|GET|/opreturn/blockheight/:blockHeight|
+|GET|/opreturn/blockhash/:blockHash|
+|GET|/opreturn/data/:data|
 
 ## Demo screenshots
 ![console screenshot](./screenshots/scan-result-console-1.png)
