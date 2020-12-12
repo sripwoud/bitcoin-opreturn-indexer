@@ -1,12 +1,9 @@
 # Test Asset Integration Engineer - Exodus
 ## Requirements & Rules
-- [ ] store Bitcoin OP_RETURN data
-- [ ] index Bitcoin OP_RETURN data
-
-(Blocks are indexed and stored but with empty buffers due to an issue not yet fixed. See [to fix](#to-fix))
-
+- [x] store Bitcoin OP_RETURN data
+- [x] index Bitcoin OP_RETURN data
 - [x] time limit: 8 hours
-- [x] serve on an HTTP endpoint as a JSON payload: `/opreturn/${opReturnData}`
+- [x] serve on an HTTP endpoint as a JSON payload
 - [x] payload should include transaction hash and block hash
 - [x] NodeJS
 - [x] any 3rd-party npm library
@@ -51,33 +48,29 @@ Requirements:
 Run tests in respective packages/folders: `yarn test`
 
 ## DB Schema
-|Column|Type|
-|--|--|
-|op_return|bytes|
-|blockHash|string|
-|blockHeight|integer|
-|txHash|string|
+|Column|Type|Description|
+|--|--|--|
+|data|TEXT|OP RETURN data|
+|blockHash|TEXT|
+|blockHeight|INTEGER|
+|txHash|TEXT|txid|
 
 ## API
 ### Route
-|METHOD|ROUTE|RESPONSE||
+|METHOD|ROUTE|RESPONSE|
 |--|--|--|--|
-|GET|/opreturn/:blockHeight|opReturn record||
-|GET|/opreturn/:blockHash|opReturn record||
-|GET|/opreturn/:opreturnHex|opReturn record|TO DO|
+|GET|/opreturn/blockheight/:blockHeight|opReturn record|
+|GET|/opreturn/blockhash/:blockHash|opReturn record|
+|GET|/opreturn/data/:data|opReturn record|
 
-## Example: indexing 10 blocks results
-![console screenshot](./screenshots/scanning-result-console.png)
+## Demo screenshots
+![console screenshot](./screenshots/scan-result-console-1.png)
+
+![console screenshot](./screenshots/scan-result-console-2.png)
 
 ![dbeaver screenshot](./screenshots/scanning-result-dbeaver.png)
 
-![browser screenshot](./screenshots/scanning-result-browser.png)
-
-## To Fix
-The [utils](./indexer/src/lib/utils) functions do seem to return correct op_return buffers.  
-However the op_return records inserted in the DB have empty buffers!  
-It is likely an issue related to wrong datatype/interface definitions in my [OpReturn Model definition file](./db/src/models/opreturn.ts) ((BLOB?)).
-
+![browser screenshot](./screenshots/scan-result-browser.png)
 
 ## Resource
 - How to read read raw OP_RETURN data from blocks: refactored version of functions found in [blockai-unofficial/raw-op-return](https://github.com/blockai-unofficial/raw-op-return)
