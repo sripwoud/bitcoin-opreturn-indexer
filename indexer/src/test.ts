@@ -2,19 +2,25 @@ import { btc } from './lib'
 import { getTxsFromBlock, getOpReturnDataFromBlock } from './lib'
 
 const test = async () => {
-  const blockheight = 1897264
+  const blockheight = 1897275
 
-  const problemTxHash =
-    '607ac2a34a8e9318cc8dbe1da6ab5081db52418387b06b2cd07a50c0cacf2fd2'
   const blockHash = await btc('getBlockHash', [+blockheight])
   const block = await btc('getBlock', [blockHash])
   const rawTxs = await Promise.all(
-    block.tx.map(async (txHash: string) => {
-      console.log(txHash)
-      return btc('getRawTransaction', [txHash, true, blockHash])
+    block.tx.map(async (txHash: string, i: number) => {
+      console.log(txHash, i)
+      try {
+        return btc('getRawTransaction', [txHash, true, blockHash])
+      } catch (error) {
+        return
+      }
     })
   )
+  console.log(rawTxs)
 
+  // const problemTxHash =
+  //   '2440b5e57b1dd73f45294bea3fd30e521a2a87de4a1ead7fbde5bac3faaaa6ff'
+  // console.log(block.tx)
   // const rawTx = await btc('getRawTransaction', [problemTxHash, true, blockHash])
   // console.log(rawTx)
 }

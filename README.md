@@ -23,6 +23,12 @@ Requirements:
 - yarn
 - postgres
 - nodeJS
+1. bitcoin-core client config
+  See [bitcoin.conf](./bitcoin.conf).  
+  Especially pay attention to the `rpcworkqueue` setting to avoid the following error (in debug.log file). I haven't run into errors by setting it to 500.
+    ```
+    WARNING: request rejected because http work queue depth exceeded, it can be increased with the -rpcworkqueue= setting
+    ```
 1. Install dependencies: `cd <db|indexer|json-api> && yarn`
 2. Set up DB
     - Requirements: PostgreSQL
