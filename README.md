@@ -78,9 +78,7 @@ Requirements: yarn, postgres, nodeJS/npm
 ## Demo
 ![indexer demo gif](./assets/op_return_indexer_demo.gif)
 
-![dbeaver screenshot](./assets/scanning-result-dbeaver.png)
-
-![browser screenshot](./assets/scan-result-browser.png)
+![front end screenshot](./assets/front-end.png)
 
 ## Further developments
 See [enhancement issues](https://github.com/AliahChurch/GauthierTest/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
