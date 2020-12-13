@@ -74,14 +74,12 @@ Requirements: yarn, postgres, nodeJS/npm
 |GET|/opreturn/blockhash/:blockHash|
 |GET|/opreturn/data/:data|
 
-## Demo screenshots
-![console screenshot](./screenshots/scan-result-console-1.png)
+## Demo
+![indexer demo gif](./assets/op_return_indexer_demo.gif)
 
-![console screenshot](./screenshots/scan-result-console-2.png)
+![dbeaver screenshot](./assets/scanning-result-dbeaver.png)
 
-![dbeaver screenshot](./screenshots/scanning-result-dbeaver.png)
-
-![browser screenshot](./screenshots/scan-result-browser.png)
+![browser screenshot](./assets/scan-result-browser.png)
 
 ## Resource
 - How to read read raw OP_RETURN data from blocks: refactored version of functions found in [blockai-unofficial/raw-op-return](https://github.com/blockai-unofficial/raw-op-return)
