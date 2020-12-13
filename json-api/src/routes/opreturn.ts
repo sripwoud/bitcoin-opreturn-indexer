@@ -1,41 +1,47 @@
-import { Router } from 'express'
+import { Router, Response, Request } from 'express'
 
 import { OpReturn } from '../../../db/src/models'
 import { NotFoundError } from '../errors'
 
 const router = Router()
 
-router.get('/opreturn/blockheight/:blockHeight', async (req, res) => {
-  let { blockHeight } = req.params
-  const opreturn = await OpReturn.findAll({
-    where: { blockHeight: +blockHeight }
-  })
+router.get(
+  '/opreturn/blockheight/:blockHeight',
+  async (req: Request, _, next) => {
+    let { blockHeight } = req.params
+    const opreturns = await OpReturn.findAll({
+      where: { blockHeight: +blockHeight }
+    })
 
-  if (!opreturn) throw new NotFoundError()
+    if (!opreturns) throw new NotFoundError()
 
-  res.status(200).send(opreturn)
-})
+    req.body = opreturns
+    next()
+  }
+)
 
-router.get('/opreturn/blockhash/:blockHash', async (req, res) => {
+router.get('/opreturn/blockhash/:blockHash', async (req, _, next) => {
   let { blockHash } = req.params
-  const opreturn = await OpReturn.findAll({
+  const opreturns = await OpReturn.findAll({
     where: { blockHash }
   })
 
-  if (!opreturn) throw new NotFoundError()
+  if (!opreturns) throw new NotFoundError()
 
-  res.status(200).send(opreturn)
+  req.body = opreturns
+  next()
 })
 
-router.get('/opreturn/data/:data', async (req, res) => {
+router.get('/opreturn/data/:data', async (req, _, next) => {
   let { data } = req.params
-  const opreturn = await OpReturn.findAll({
+  const opreturns = await OpReturn.findAll({
     where: { data }
   })
 
-  if (!opreturn) throw new NotFoundError()
+  if (!opreturns) throw new NotFoundError()
 
-  res.status(200).send(opreturn)
+  req.body = opreturns
+  next()
 })
 
 export { router as opReturnRouter }

@@ -3,11 +3,11 @@ import 'express-async-errors'
 
 import { router } from './routes'
 import { NotFoundError } from './errors'
-import { middlewares, errorHandler } from './middlewares'
+import { middlewares, errorHandler, postProcesser } from './middlewares'
 
 const app = express()
 
-app.use([...middlewares, router])
+app.use([...middlewares, router, postProcesser])
 
 app.all('*', async (req, res) => {
   throw new NotFoundError()
