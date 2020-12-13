@@ -13,17 +13,16 @@
 
 ### Example
 Transaction [8bae12b5f4c088d940733dcd1455efc6a3a69cf9340e17a981286d3778615684](https://www.smartbit.com.au/tx/8bae12b5f4c088d940733dcd1455efc6a3a69cf9340e17a981286d3778615684) has `OP_RETURN` 636861726c6579206c6f766573206865696469 that decoded leads to "charley loves heidi".
-![tx_screenshot](./screenshots/capture_smartbit.png)
+![tx_screenshot](./assets/capture_smartbit.png)
 
 ## Getting started
 Requirements: yarn, postgres, nodeJS/npm
-1. bitcoin-core client config
-  See [bitcoin.conf](./bitcoin.conf).  
+1. Run a bitcoin-core client. See config [bitcoin.conf](./bitcoin.conf).  
   Especially pay attention to the `rpcworkqueue` setting to avoid the following error (in debug.log file). I haven't run into errors by setting it to 500.
     ```
     WARNING: request rejected because http work queue depth exceeded, it can be increased with the -rpcworkqueue= setting
     ```
-1. Install dependencies: `cd <db|indexer|json-api> && yarn`
+1. Install packages dependencies: `cd <db|indexer|json-api> && yarn`
 2. Set up DB
     - Requirements: PostgreSQL
     - Create `opreturn` DB:
@@ -54,7 +53,8 @@ Requirements: yarn, postgres, nodeJS/npm
         port: 8332 // default
     ```
 2. Index blocks: `cd indexer && yarn start`
-2. Start json-api: `cd json-api && yarn start`. Access api at [http://localhost:3000/](http://localhost:3000/)
+2. Start json-api: `cd json-api && yarn start`. Access at [http://localhost:3001/](http://localhost:3001/)
+3. Start front-end: `cd front-end && yarn start`. Access at [http://localhost:3000/](http://localhost:3000/)
 
 ## Tests: `yarn test` (in respective packages/folders:)
 
@@ -81,6 +81,9 @@ Requirements: yarn, postgres, nodeJS/npm
 ![dbeaver screenshot](./assets/scanning-result-dbeaver.png)
 
 ![browser screenshot](./assets/scan-result-browser.png)
+
+## Further developments
+See [enhancement issues](https://github.com/AliahChurch/GauthierTest/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
 
 ## Resource
 - How to read read raw OP_RETURN data from blocks: refactored version of functions found in [blockai-unofficial/raw-op-return](https://github.com/blockai-unofficial/raw-op-return)

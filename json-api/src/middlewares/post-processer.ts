@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express'
 import { OpReturnAttrs } from '../../../db/src/models'
 
-interface OpReturn extends OpReturnAttrs {
-  createdAt: string
-  updatedAt: string
+export interface OpReturn extends OpReturnAttrs {
+  createdAt?: string
+  updatedAt?: string
   data_decoded?: string
 }
 

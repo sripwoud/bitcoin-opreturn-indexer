@@ -1,0 +1,11 @@
+body {
+  font-family: monospace;
+  overflow-x: hidden;
+}
+
+.scroll {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border: 1px white solid;
+  height: calc(75vh);
+}

@@ -1,7 +1,9 @@
 import { app } from './app'
 
+const PORT = 3001
+
 const start = async () => {
-  app.listen(3000, () => console.log(`Server 👂 on port 3000`))
+  app.listen(PORT, () => console.log(`Server 👂 on port ${PORT}`))
 }
 
 start()

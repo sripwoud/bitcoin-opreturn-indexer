@@ -1,6 +1,7 @@
 import express from 'express'
+import cors from 'cors'
 
-const middlewares = [express.json()]
+const middlewares = [cors(), express.json()]
 
 export { middlewares }
 export * from './error-handler'
