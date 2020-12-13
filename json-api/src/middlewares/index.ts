@@ -3,4 +3,5 @@ import express from 'express'
 const middlewares = [express.json()]
 
 export { middlewares }
-export { errorHandler } from './error-handler'
+export * from './error-handler'
+export * from './post-processer'

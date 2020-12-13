@@ -7,7 +7,7 @@ const router = Router()
 
 router.get('/opreturn/blockheight/:blockHeight', async (req, res) => {
   let { blockHeight } = req.params
-  const opreturn = await OpReturn.findOne({
+  const opreturn = await OpReturn.findAll({
     where: { blockHeight: +blockHeight }
   })
 
@@ -18,7 +18,7 @@ router.get('/opreturn/blockheight/:blockHeight', async (req, res) => {
 
 router.get('/opreturn/blockhash/:blockHash', async (req, res) => {
   let { blockHash } = req.params
-  const opreturn = await OpReturn.findOne({
+  const opreturn = await OpReturn.findAll({
     where: { blockHash }
   })
 
@@ -29,7 +29,7 @@ router.get('/opreturn/blockhash/:blockHash', async (req, res) => {
 
 router.get('/opreturn/data/:data', async (req, res) => {
   let { data } = req.params
-  const opreturn = await OpReturn.findOne({
+  const opreturn = await OpReturn.findAll({
     where: { data }
   })
 

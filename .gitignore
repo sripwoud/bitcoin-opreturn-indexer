@@ -1,4 +1,7 @@
 node_modules
 .env
 
+# TODO add github ci test workflows
+.github
+
 try.ts
