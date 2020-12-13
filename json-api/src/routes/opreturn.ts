@@ -1,7 +1,8 @@
-import { Router, Response, Request } from 'express'
+import { Router, Response, Request, NextFunction } from 'express'
 
 import { OpReturn } from '../../../db/src/models'
 import { NotFoundError } from '../errors'
+import { range } from '../lib'
 
 const router = Router()
 
@@ -11,6 +12,22 @@ router.get(
     let { blockHeight } = req.params
     const opreturns = await OpReturn.findAll({
       where: { blockHeight: +blockHeight }
+    })
+
+    if (!opreturns) throw new NotFoundError()
+
+    req.body = opreturns
+    next()
+  }
+)
+
+router.post(
+  '/opreturn/blockheight',
+  async (req: Request, _, next: NextFunction) => {
+    const { from, to } = req.body
+
+    const opreturns = await OpReturn.findAll({
+      where: { blockHeight: range(from, to, 1) }
     })
 
     if (!opreturns) throw new NotFoundError()

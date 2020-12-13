@@ -68,11 +68,12 @@ Requirements: yarn, postgres, nodeJS/npm
 
 ## API
 ### Routes
-|METHOD|ROUTE|
-|--|--|
-|GET|/opreturn/blockheight/:blockHeight|
-|GET|/opreturn/blockhash/:blockHash|
-|GET|/opreturn/data/:data|
+|METHOD|ROUTE|PAYLOAD|
+|--|--|--|
+|GET|/opreturn/blockheight/:blockHeight||
+|POST|/opreturn/blockheight/:blockHeight|{from: number, to: number}|
+|GET|/opreturn/blockhash/:blockHash||
+|GET|/opreturn/data/:data||
 
 ## Demo
 ![indexer demo gif](./assets/op_return_indexer_demo.gif)
