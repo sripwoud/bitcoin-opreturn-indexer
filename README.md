@@ -2,7 +2,6 @@
 ## Requirements & Rules
 - [x] store Bitcoin OP_RETURN data
 - [x] index Bitcoin OP_RETURN data
-- [x] time limit: 8 hours
 - [x] serve on an HTTP endpoint as a JSON payload
 - [x] payload should include transaction hash and block hash
 - [x] NodeJS
