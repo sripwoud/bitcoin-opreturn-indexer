@@ -1,15 +1,20 @@
 # Test Asset Integration Engineer - Exodus
-## Requirements & Rules
+## Features
 - [x] store Bitcoin OP_RETURN data
 - [x] index Bitcoin OP_RETURN data
 - [x] serve on an HTTP endpoint as a JSON payload
-- [x] payload should include transaction hash and block hash
+- [x] payload includes transaction hash and block hash
 - [x] NodeJS
 - [x] any 3rd-party npm library
 - [x] Postgres as database
 - [x] Bitcoin ~~mainnet~~ or testnet
 - [x] use bitcoind
 
+## Built with
+- NodeJS
+- [node-postgres](https://node-postgres.com/), [sequelize](https://sequelize.org/)
+- [bitcoin-core](https://github.com/ruimarinho/bitcoin-core), [bitcoin RPC API](https://developer.bitcoin.org/reference/rpc/index.html)
+- [ExpressJS](https://expressjs.com/)
 ### Example
 Transaction [8bae12b5f4c088d940733dcd1455efc6a3a69cf9340e17a981286d3778615684](https://www.smartbit.com.au/tx/8bae12b5f4c088d940733dcd1455efc6a3a69cf9340e17a981286d3778615684) has `OP_RETURN` 636861726c6579206c6f766573206865696469 that decoded leads to "charley loves heidi".
 ![tx_screenshot](./assets/capture_smartbit.png)
@@ -28,7 +33,7 @@ Requirements: yarn, postgres, nodeJS/npm
       ```
       sudo su - postgres
       psql
-      ALTER USER r1oga WITH PASSWORD 'exodus'; # change user and pwd
+      ALTER USER r1oga WITH PASSWORD 'r1oga'; # change user and pwd
       \q
       exit
       psql -d postgres
@@ -78,9 +83,6 @@ Requirements: yarn, postgres, nodeJS/npm
 ![indexer demo gif](./assets/op_return_indexer_demo.gif)
 
 ![front end screenshot](./assets/front-end.png)
-
-## Further developments
-See [enhancement issues](https://github.com/AliahChurch/GauthierTest/issues?q=is%3Aopen+is%3Aissue+label%3Aenhancement)
 
 ## Resource
 - How to read read raw OP_RETURN data from blocks: refactored version of functions found in [blockai-unofficial/raw-op-return](https://github.com/blockai-unofficial/raw-op-return)
