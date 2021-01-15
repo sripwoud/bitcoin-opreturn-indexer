@@ -1,4 +1,5 @@
-# Test Asset Integration Engineer - Exodus
+# Bitcoin OP_RETURN Data Indexer
+Index and store bitcoin OP_RETURN data. Serve via JSON API.
 ## Features
 - [x] store Bitcoin OP_RETURN data
 - [x] index Bitcoin OP_RETURN data
