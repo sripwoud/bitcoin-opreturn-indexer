@@ -5,11 +5,6 @@ Index and store bitcoin OP_RETURN data. Serve via JSON API.
 - [x] index Bitcoin OP_RETURN data
 - [x] serve on an HTTP endpoint as a JSON payload
 - [x] payload includes transaction hash and block hash
-- [x] NodeJS
-- [x] any 3rd-party npm library
-- [x] Postgres as database
-- [x] Bitcoin ~~mainnet~~ or testnet
-- [x] use bitcoind
 
 ## Built with
 - NodeJS
